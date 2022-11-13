@@ -1,7 +1,4 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 class MyHashMap {
     
@@ -24,13 +21,8 @@ class MyHashMap {
     }
     
     public void remove(int key) {
-        // key-value 삭제
-    	if(map.containsKey(key)) {    		
-    		map.remove(key);
-    	}
+        map.remove(key);
     }
-    
-
     
 }
 
