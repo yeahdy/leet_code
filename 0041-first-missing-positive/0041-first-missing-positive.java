@@ -25,16 +25,14 @@ class Solution {
     		    }
     		    j++;
     	    }
+            
+            if(result == 0) {
+        		result = list.get(list.size()-1) + 1; 
+            }
+        }else {
+        	result = 1;
         }
     	
-    	if(result == 0) {
-            if(list.size() > 0){
-                result = list.get(list.size()-1) + 1; 
-            }else {
-                result = 1;
-            }
-    		
-    	}
     	
     	return result;
     }
