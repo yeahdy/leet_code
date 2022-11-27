@@ -24,7 +24,7 @@ class Solution {
 			
 			System.out.println(sumNum);
 			result += Integer.toString(sumNum % 10);	
-			sumNum = sumNum / 10;	
+			sumNum /= 10;	
 			
 			if(i == length-1 && sumNum > 0) {
 				result += "1";
