@@ -28,16 +28,8 @@ class Solution {
 		if(list.get(0) != root.val) {
 			return false;
 		}
-
-		
-		if(!preOrder(root.left, list)) {
-			return false;
-		};
-		if(!preOrder(root.right, list)) {
-			return false;
-		};
-		
-		return true;
+        
+        return preOrder(root.left, list) && preOrder(root.right, list);
 	}
     
 }
