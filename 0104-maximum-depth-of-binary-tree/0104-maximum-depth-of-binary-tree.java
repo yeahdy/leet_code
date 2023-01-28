@@ -18,10 +18,7 @@ class Solution {
 		if(root == null) return 0;
         
         int leftCnt = maxDepth(root.left);
-        System.out.println("left :: "+ leftCnt);
-        
         int rightCnt = maxDepth(root.right);
-        System.out.println("right :: "+ rightCnt);
         
         // 왼쪽, 오른쪽 나누어서 비교
         return Math.max(leftCnt, rightCnt) + 1;
