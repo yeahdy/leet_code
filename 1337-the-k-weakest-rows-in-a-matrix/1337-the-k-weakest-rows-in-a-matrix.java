@@ -1,6 +1,6 @@
 class Solution {
     public int[] kWeakestRows(int[][] mat, int k) {
-        Map<Integer,Integer> hashMap = new HashMap<>();
+        Map<Integer,Integer> hashMap = new TreeMap<>();
 		
 		// 각 행에서 1을 갯수를 count
 		for(int i=0; i < mat.length; i++) {
