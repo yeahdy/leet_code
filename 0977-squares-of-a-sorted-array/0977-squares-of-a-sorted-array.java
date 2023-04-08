@@ -14,16 +14,13 @@ class Solution {
         int nums[] = new int[arr.length];
         for(int i = nums.length-1; i>=0; i--){
             if(Math.abs(arr[L])>=Math.abs(arr[R])){
-                System.out.println("Left :: "+arr[L]);
                 nums[i]=arr[L]*arr[L];
                 L++;
             }
             else{
-                System.out.println("Right :: "+arr[R]);
                 nums[i] =arr[R]*arr[R];
                 R--;
             }
-            System.out.println("nums[i] :: "+ nums[i]);
         }
         return nums;
         
