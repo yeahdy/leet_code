@@ -1,54 +1,51 @@
 class Solution {
+    // DFS
     /*
-    [BFS 풀이]
-    1. 이중 for문을 돌면서 시작 노드가 target과 부합한다면 queue에 추가, 방문표시 한다.
-    -> 이때 해당 노드를 중심으로 연결된 모든 노드를 찾기 때문에 이미 하나의 섬을 찾았다는 뜻
-    
-    2. 추가한 노드를 기준으로 연결되어 있는 주변 노드를 네 방향으로 탐색한다.
-    
-    3. 주변 노드들 중 조건에 부합하는 target이 있다면 queue에 추가, 방문표시
-    -> 부합하지 않는다면 다음으로 넘어간다.
-    
-    4. 추가한 노드를 뽑고, 다시 해당 노드를 기준으로 연결된 노드 탐색
-    -> queue가 비어질때 까지 2.3.을 반복한다.
-    queue가 비어 있다는 뜻은 연결되어 있는 모든 노드를 다 순회했다는 뜻
-    
-    5. 더 이상 queue 반복문을 돌지 않고, 반복문을 탈출한 후 다음 연결된 노드를 찾으러 간다.
+    이중for문을 통해 전체 노드를 순회한다.
+    만약 target에 일치하는 노드가 있다면 방문처리 후 깊이 탐색 시작
+    해당 노드로 부터 하-우-상-좌 네 방향을 돌면서 target과 일치하는 노드를 찾는다.
+    target의 조건에 부합하지 않다면 깊이 탐색을 멈추고, 다음 방향으로 이동한다.
+    하나의 노드로 부터 연결된 깊이 탐색을 모두 순회한 후, 호출한 곳으로 다시 돌아간다.
     */
     public int numIslands(char[][] grid) {
         int islandCount= 0;
-        int row = grid.length, colmn = grid[0].length;
-        if(row == 0) return islandCount;
-        
-        Queue<int[]> queue = new LinkedList<>();
-        int[][] direction = {{1,0},{0,1},{-1,0},{0,-1}};
+        int row= grid.length, column= grid[0].length;
         
         for(int i=0; i<row; i++){
-            for(int j=0; j<colmn; j++){
-                
+            for(int j=0; j<column; j++){               
                 if(grid[i][j] == '1'){
-                    islandCount += 1;
-                    queue.add(new int[]{i,j});
-                    grid[i][j] = 'x';
-                    
-                    while(!queue.isEmpty()){
-                        int[] node = queue.poll();
-                        for(int[] d : direction){
-                            int r= node[0] + d[0];
-                            int c= node[1] + d[1];
-                            if(r<row && c<colmn && r >= 0 && c >= 0 && grid[r][c] == '1'){
-                                //System.out.printf("grid[%d][%d]\n",r,c);
-                                queue.add(new int[]{r,c});
-                                grid[r][c] = 'x';
-                            }
-                        }
-                    }
-                }//if
+                    dfs(grid, i, j, row, column);
+                    islandCount++;
+                }
                 
-            }//안쪽for
-        }//바깥for
-        
+            }
+        }
         return islandCount;
     }
-
+    
+    private void dfs(char[][] grid, int i, int j, int row, int column){
+        if(i<0 || j<0 || i>=row || j>=column || grid[i][j] != '1') return;
+        
+        // 방문처리
+        grid[i][j] = 'x';
+        // 하-우-상-좌 네 방향 순회
+        dfs(grid, i+1, j, row, column);
+        dfs(grid, i, j+1, row, column);
+        dfs(grid, i-1, j, row, column);
+        dfs(grid, i, j-1, row, column);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
