@@ -1,51 +1,42 @@
 class Solution {
-    // DFS
+    //BFS
     /*
-    이중for문을 통해 전체 노드를 순회한다.
-    만약 target에 일치하는 노드가 있다면 방문처리 후 깊이 탐색 시작
-    해당 노드로 부터 하-우-상-좌 네 방향을 돌면서 target과 일치하는 노드를 찾는다.
-    target의 조건에 부합하지 않다면 깊이 탐색을 멈추고, 다음 방향으로 이동한다.
-    하나의 노드로 부터 연결된 깊이 탐색을 모두 순회한 후, 호출한 곳으로 다시 돌아간다.
+    조건에 부합할 경우 Queue에 추가한 후, 중복해서 방문하지 않도록 방문처리 한다.
+    queue에서 빼내어 해당 노드를 기준으로 연결되어 있는 모든 노드를 탐색한다
+    탐색 중 조건에 맞는 노드를 찾으면 Queue에 추가 > 빼기 > 주변 노드 탐색 과정을 반복한다.
+    그러다 Queue가 비면 더 이상 연결되어 있는 노드가 없다는 뜻이므로 탐색을 종료한다.
     */
     public int numIslands(char[][] grid) {
-        int islandCount= 0;
+        int islandCount=0;
         int row= grid.length, column= grid[0].length;
         
+        Queue<int[]> queue = new LinkedList<>();
+        int[][] direction = {{1,0},{0,1},{-1,0},{0,-1}};
         for(int i=0; i<row; i++){
-            for(int j=0; j<column; j++){               
-                if(grid[i][j] == '1'){
-                    dfs(grid, i, j, row, column);
-                    islandCount++;
-                }
+            for(int j=0; j<column; j++){
                 
-            }
-        }
+                if(grid[i][j] == '1'){
+                    islandCount++;
+                    queue.add(new int[]{i,j});
+                    
+                    while(!queue.isEmpty()){
+                        int[] node = queue.poll();
+                        // 해당 노드를 기준으로 하-우-상-좌 탐색
+                        for(int[] drt :direction){
+                            int r= node[0]+drt[0];
+                            int c= node[1]+drt[1];
+                            if(r<row && c<column && r>=0 && c>=0 && grid[r][c] == '1'){
+                                queue.add(new int[]{r,c});
+                                grid[r][c] = 'x';
+                            }
+                        }
+                    }//while
+                    
+                }//if
+                
+            }//안쪽
+        }//바깥
+     
         return islandCount;
     }
-    
-    private void dfs(char[][] grid, int i, int j, int row, int column){
-        if(i<0 || j<0 || i>=row || j>=column || grid[i][j] != '1') return;
-        
-        // 방문처리
-        grid[i][j] = 'x';
-        // 하-우-상-좌 네 방향 순회
-        dfs(grid, i+1, j, row, column);
-        dfs(grid, i, j+1, row, column);
-        dfs(grid, i-1, j, row, column);
-        dfs(grid, i, j-1, row, column);
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
